@@ -1,6 +1,7 @@
 body{
     font-family: sans-serif;
     margin:0;
+  
 }
 .container_title{
     width: 900px;
@@ -12,8 +13,15 @@ body{
     padding: 10px 20px;
     background-color: blue;
     color: white;
-    
+    /* transition: transform 0.5s; */
 }
+/* 
+body.activeTabCart .container_title {
+    transform: translateX(-250px);
+}
+body.activeTabCart .container_title_free{
+    transform: translateX(-250px);
+} */
 
 .blink {
     animation: blinker 2s linear infinite;
@@ -31,6 +39,7 @@ body{
     display: flex;
     justify-content: space-between;
 }
+
 
 .container_title img{
     width: 100px;
@@ -57,10 +66,38 @@ body{
     background-color:white;
     color: white;
     height: 20px;
-  
+    /* transition: transform 0.5s; */
 }
 .container_title span{
    font-size: medium;
+}
+.search {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    border-radius: 28px;
+    background-color: #f6f6f6;
+    width: 600px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.25s;
+}
+.search:focus-within{
+    box-shadow: 0 0 2px rgba(0,0,0,0.75);
+}
+.search-input {
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    columns: #333;
+    margin-left: 14px;
+    outline: none;
+    border:none;
+    background:transparent;
+    width: 300px;
+}
+.search-input::placeholder, .search-icon{
+    color: rgba(0,0,0,0.5);
 }
 
 .container{
@@ -69,7 +106,7 @@ body{
     margin: auto;
     text-align: center;
     padding-top: 10px;
-    transition: 0.5s;
+    /* transition: transform 0.5s; */
     
 }
 .title{
@@ -109,7 +146,7 @@ header .icon-cart span{
     right:-20px;
 }
 .listProduct .item img{
-   height: 70%;
+   height: 60%;
     width: 90%;
     /* filter: drop-shadow(0 10px 20px #0009); */
 
@@ -149,31 +186,64 @@ header .icon-cart span{
     cursor: pointer;
 }
 
-.cartTab{
-    width: 400px;
-    background-color: black;
-    color: white;
-    position: fixed;
-    inset: 0 -400px 0 auto;
-    display: grid;
-    grid-template-rows: 70 1fr 70px;
-    max-width: 100%;
+.select {
+    padding: 8px 12px;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    display: flex;
+    width: 30%;
 }
 
-body .showCart .cartTab{
-    inset:0 0 0 auto;
+.cartTab{
+    width: 400px;
+    max-width: 100%;
+    background-color: grey;
+    color: white;
+    position: fixed;
+   top:0;
+   right:0;
+   bottom: 0;
+    display: grid;
+    grid-template-rows: 70px 1fr 70px;
+   
 }
-body .showCart .container{
+.cartTab{
+   right: -400px;
+   transition: 0.5s;
+   
+}
+.cartTab h1{
+    background-color: goldenrod;
+    
+ }
+
+body.activeTabCart .cartTab{
+    right:0;
+}
+/* body.activeTabCart .container{
     transform: translateX(-250px);
-}
+} */
 .cartTab h1{
     padding: 20px;
     margin: 0;
     font-weight: 300;
 }
+.cartTab .foot{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color:#555;
+        
+}
 .cartTab .btn{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
+    height: 60px;
 }
 .cartTab .btn button{
     background-color: #E8BC0E;
@@ -185,8 +255,12 @@ body .showCart .container{
     background-color: white;
 }
 .cartTab .listCart .item img{
+    width: 100%;
+}
+
+.cartTab .listCart .item {
     display: grid;
-    grid-template-columns: 70px 150px 50px 1ft;
+    grid-template-columns: 70px 150px 50px 1fr;
     gap:10px;
     text-align: center;
     align-items: center;
@@ -202,24 +276,229 @@ body .showCart .container{
 }
 .listCart .quantity span:nth-child(2){
     background-color: transparent;
-    columns: #eee;
+    color: #eee;
 }
 .listCart .item:nth-child(even){
     background-color: #eee1;
 }
-.listCart{
+.cartTab .listCart{
     overflow: auto;
 }
-.listCart::-webkit-scrollbar{
+.cartTab .listCart::-webkit-scrollbar{
     width: 0;
 }
 body.activeTabCart .cartTab{
     right: 0;
 }
 
+.container_popup{
+    width: 900px;
+    max-width: 90vw;
+    margin: auto;
+    text-align: center;
+    padding-top: 10px;
+
+    
+}
+.container_popup .btn{
+    
+    padding: 10px 60px;
+    background: #fff;
+    border: 0;
+    outline: none;
+    cursor:pointer;
+    font-size: 22px;
+    font-weight: 500;
+    border-radius: 30px;
+          
+}
+.popup{
+    width: 400px;
+    background:rgb(147, 216, 227);
+    border-radius: 6px;
+    position:absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+.open-popup{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(1);
+}
+.popup img{
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.popup h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.popup button{
+    width: 70%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: blue;
+    color: black;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* contact  */
+
+
+.contact h2{
+    font-size: 40px;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.contact form {
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+}
+form .input-box{
+    display: flex;
+    justify-content: space-between;
+}
+.input-box .input-field{
+    width: 100%;
+}
+.field .item{
+    width: 80%;
+    padding: 18px;
+    background: transparent;
+    border: 2px solid black;
+    outline:none;
+    border-radius: 6px;
+    color: black;
+    margin: 12px 0;
+}
+.field .item::placeholder{
+    color:grey;
+}
+.field .error-txt{
+    font-size:14.5px;
+    color:#d93025;
+    text-align: left;
+    margin: -5px 0 10px;
+    display: none;
+}
+
+form .textarea-field {
+    width: 90%;
+}
+form .textarea-field .item {
+    resize:none;
+   
+}
+
+form .textarea-field .error-txt{
+    margin-top: -10px;
+}
+
+form button {
+    padding: 12px 32px;
+    background: #0ef;
+    border: none;
+    outline:none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #0ef;
+    font-size: 16px;
+    color: #333;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+}
+form button:hover {
+    box-shadow: none;
+}
+
+
+.container_popup2{
+    width: 100%;
+    height: 100vh;
+    background: #3c5077;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.container_popup2 .btn{
+    padding: 10px 60px;
+    background: #fff;
+    border: 0;
+    outline: none;
+    cursor:pointer;
+    font-size: 22px;
+    font-weight: 500;
+    border-radius: 30px;
+}
+.popup2{
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position:absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+.open-popup2{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(1);
+}
+.popup2 img{
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.popup2 h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.popup2 button{
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: #6fd649;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
 @media screen and (max-width: 992px){
     .listProduct{
         grid-template-columns: repeat(3,1fr);
+    }
+    form .input-box{
+        display: grid;
+        grid-template-columns: auto;
     }
 }
 @media screen and (max-width: 767px){
@@ -234,5 +513,10 @@ body.activeTabCart .cartTab{
     .title{
         display: grid;
         grid-template-columns: auto;
+    }
+    .field .item{
+        display: grid;
+        grid-template-columns: auto;
+        width: 100%;
     }
 }
